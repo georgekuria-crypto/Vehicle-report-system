@@ -20,23 +20,73 @@ st.set_page_config(
 # =========================================================
 # DESIGN SYSTEM — TOKENS
 # =========================================================
-THEME = {
-    "bg":            "#0A0E14",
-    "bg_alt":        "#0F141B",
-    "surface":       "#131A23",
-    "surface_2":     "#1A222D",
-    "border":        "#1F2A37",
-    "border_strong": "#2A3645",
-    "text":          "#E6EDF3",
-    "text_muted":    "#8B98A9",
-    "text_dim":      "#5B6776",
-    "primary":       "#3DA9FC",
-    "accent":        "#7C5CFF",
-    "success":       "#22C55E",
-    "warning":       "#F59E0B",
-    "danger":        "#EF4444",
-    "critical":      "#FF3D71",
+st.sidebar.markdown("### Appearance")
+theme_mode = st.sidebar.radio("Theme Mode", ["Dark", "Light"], horizontal=True)
+
+THEMES = {
+    "Dark": {
+        "bg":            "#0A0E14",
+        "bg_alt":        "#0F141B",
+        "surface":       "#131A23",
+        "surface_2":     "#1A222D",
+        "border":        "#1F2A37",
+        "border_strong": "#2A3645",
+        "text":          "#E6EDF3",
+        "text_muted":    "#8B98A9",
+        "text_dim":      "#5B6776",
+        "primary":       "#3DA9FC",
+        "accent":        "#7C5CFF",
+        "success":       "#22C55E",
+        "warning":       "#F59E0B",
+        "danger":        "#EF4444",
+        "critical":      "#FF3D71",
+        "grad_1":        "rgba(124,92,255,0.10)",
+        "grad_2":        "rgba(61,169,252,0.08)",
+        "sidebar_grad1": "#0C1218",
+        "sidebar_grad2": "#0A0E14",
+        "hero_grad1":    "rgba(124,92,255,0.12)",
+        "hero_grad2":    "rgba(61,169,252,0.08)",
+        "status_bg":     "rgba(34,197,94,0.10)",
+        "status_border": "rgba(34,197,94,0.30)",
+        "status_text":   "#4ADE80",
+        "shadow":        "rgba(0,0,0,0.25)",
+        "shadow_hover":  "rgba(0,0,0,0.35)",
+        "primary_shadow": "rgba(61,169,252,0.35)",
+        "plotly_template": "plotly_dark",
+    },
+    "Light": {
+        "bg":            "#F9FAFB",
+        "bg_alt":        "#FFFFFF",
+        "surface":       "#FFFFFF",
+        "surface_2":     "#F3F4F6",
+        "border":        "#E5E7EB",
+        "border_strong": "#D1D5DB",
+        "text":          "#111827",
+        "text_muted":    "#4B5563",
+        "text_dim":      "#6B7280",
+        "primary":       "#0284C7",
+        "accent":        "#6366F1",
+        "success":       "#16A34A",
+        "warning":       "#D97706",
+        "danger":        "#DC2626",
+        "critical":      "#E11D48",
+        "grad_1":        "rgba(99,102,241,0.05)",
+        "grad_2":        "rgba(2,132,199,0.05)",
+        "sidebar_grad1": "#F8FAFC",
+        "sidebar_grad2": "#F1F5F9",
+        "hero_grad1":    "rgba(99,102,241,0.08)",
+        "hero_grad2":    "rgba(2,132,199,0.05)",
+        "status_bg":     "rgba(22,163,74,0.10)",
+        "status_border": "rgba(22,163,74,0.30)",
+        "status_text":   "#16A34A",
+        "shadow":        "rgba(0,0,0,0.05)",
+        "shadow_hover":  "rgba(0,0,0,0.10)",
+        "primary_shadow": "rgba(2,132,199,0.25)",
+        "plotly_template": "plotly_white",
+    }
 }
+
+THEME = THEMES[theme_mode]
 
 SEVERITY_COLORS = {
     "Critical": "#FF3D71",
@@ -58,8 +108,8 @@ st.markdown(f"""
 
 html, body, [class*="css"], .stApp {{
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
-    background: radial-gradient(1200px 600px at 10% -10%, rgba(124,92,255,0.10), transparent 60%),
-                radial-gradient(1000px 500px at 110% 10%, rgba(61,169,252,0.08), transparent 60%),
+    background: radial-gradient(1200px 600px at 10% -10%, {THEME['grad_1']}, transparent 60%),
+                radial-gradient(1000px 500px at 110% 10%, {THEME['grad_2']}, transparent 60%),
                 {THEME['bg']} !important;
     color: {THEME['text']} !important;
 }}
@@ -90,7 +140,7 @@ hr {{
 
 /* ---------- Sidebar ---------- */
 section[data-testid="stSidebar"] {{
-    background: linear-gradient(180deg, #0C1218 0%, #0A0E14 100%) !important;
+    background: linear-gradient(180deg, {THEME['sidebar_grad1']} 0%, {THEME['sidebar_grad2']} 100%) !important;
     border-right: 1px solid {THEME['border']} !important;
 }}
 section[data-testid="stSidebar"] .block-container {{ padding-top: 2rem !important; }}
@@ -142,7 +192,7 @@ div[data-baseweb="select"] > div {{
     padding: 18px 20px !important;
     border-radius: 14px !important;
     border: 1px solid {THEME['border']};
-    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    box-shadow: 0 4px 20px {THEME['shadow']};
 }}
 [data-testid="stMetricLabel"] {{
     color: {THEME['text_muted']} !important;
@@ -172,12 +222,12 @@ div[data-baseweb="select"] > div {{
     padding: 18px 20px;
     overflow: hidden;
     transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    box-shadow: 0 4px 20px {THEME['shadow']};
 }}
 .kpi-card:hover {{
     transform: translateY(-2px);
     border-color: {THEME['border_strong']};
-    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    box-shadow: 0 12px 30px {THEME['shadow_hover']};
 }}
 .kpi-card::before {{
     content: "";
@@ -252,7 +302,7 @@ div[data-baseweb="select"] > div {{
 
 /* ---------- Hero header ---------- */
 .hero {{
-    background: linear-gradient(135deg, rgba(124,92,255,0.12), rgba(61,169,252,0.08));
+    background: linear-gradient(135deg, {THEME['hero_grad1']}, {THEME['hero_grad2']});
     border: 1px solid {THEME['border']};
     border-radius: 18px;
     padding: 22px 26px;
@@ -272,10 +322,10 @@ div[data-baseweb="select"] > div {{
 .hero-status {{
     display: inline-flex; align-items: center; gap: 8px;
     padding: 8px 14px;
-    background: rgba(34,197,94,0.10);
-    border: 1px solid rgba(34,197,94,0.30);
+    background: {THEME['status_bg']};
+    border: 1px solid {THEME['status_border']};
     border-radius: 999px;
-    font-size: 0.78rem; color: #4ADE80; font-weight: 600;
+    font-size: 0.78rem; color: {THEME['status_text']}; font-weight: 600;
 }}
 .hero-status .pulse {{
     width: 8px; height: 8px; border-radius: 50%;
@@ -314,7 +364,7 @@ div[data-baseweb="select"] > div {{
 .stTabs [aria-selected="true"] {{
     background: linear-gradient(135deg, {THEME['primary']}, {THEME['accent']}) !important;
     color: #fff !important;
-    box-shadow: 0 4px 14px rgba(61,169,252,0.35);
+    box-shadow: 0 4px 14px {THEME['primary_shadow']};
 }}
 .stTabs [data-baseweb="tab-highlight"],
 .stTabs [data-baseweb="tab-border"] {{ display: none !important; }}
@@ -335,11 +385,11 @@ div[data-baseweb="select"] > div {{
     padding: 10px 20px !important;
     font-weight: 600 !important;
     transition: transform .15s ease, box-shadow .15s ease;
-    box-shadow: 0 4px 14px rgba(61,169,252,0.25);
+    box-shadow: 0 4px 14px {THEME['primary_shadow']};
 }}
 .stButton > button:hover, .stDownloadButton > button:hover {{
     transform: translateY(-1px);
-    box-shadow: 0 8px 22px rgba(61,169,252,0.35);
+    box-shadow: 0 8px 22px {THEME['primary_shadow']};
 }}
 
 /* ---------- Alerts ---------- */
@@ -358,7 +408,7 @@ div[data-baseweb="select"] > div {{
     border: 1px solid {THEME['border']};
     border-radius: 16px;
     padding: 14px 14px 8px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.20);
+    box-shadow: 0 4px 20px {THEME['shadow']};
 }}
 
 /* Scrollbar */
@@ -374,7 +424,7 @@ div[data-baseweb="select"] > div {{
 # =========================================================
 def apply_chart_theme(fig, height=None, show_legend=True, title=None):
     fig.update_layout(
-        template="plotly_dark",
+        template=THEME["plotly_template"],
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(family="Inter, sans-serif", color=THEME["text"], size=12),
